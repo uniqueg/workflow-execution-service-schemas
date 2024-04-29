@@ -825,20 +825,24 @@ components:
       title: LogType
       enum:
         - WRROC_PROCESS
-        - WRROC_WORKFLOW
         - WRROC_PROV
+        - WRROC_WORKFLOW
       type: string
       nullable: true
       description: >
         Supported models and schemes for describing the shape of structured logging information. Can take any of the following values:
 
-        + WRROC_PROCESS: Workflow Run RO-Crate Process Run Crate (https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate). Expects a single serialized JSON-LD string item in `StructuredLog.logs` that conforms to the profile version indicated in `StructuredLog.log_type_version`.
+        + WRROC_PROCESS: Workflow Run RO-Crate Process Run Crate (https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate).
+        Expects a single serialized JSON-LD string item in `StructuredLog.logs` that conforms to the profile version indicated in `StructuredLog.log_type_version`.
 
-        + WRROC_WORKFLOW: Workflow Run RO-Crate Workflow Run Crate (https://www.researchobject.org/workflow-run-crate/profiles/workflow_run_crate).  Expects a single serialized JSON-LD string item in `StructuredLog.logs` that conforms to the profile version indicated in `StructuredLog.log_type_version`.
+        + WRROC_PROV: Workflow Run RO-Crate Provenance Run Crate (https://www.researchobject.org/workflow-run-crate/profiles/provenance_run_crate).
+        Expects a single serialized JSON-LD string item in `StructuredLog.logs` that conforms to the profile version indicated in `StructuredLog.log_type_version`.
 
-        + WRROC_PROV: Workflow Run RO-Crate Provenance Run Crate (https://www.researchobject.org/workflow-run-crate/profiles/provenance_run_crate). Expects a single serialized JSON-LD string item in `StructuredLog.logs` that conforms to the profile version indicated in `StructuredLog.log_type_version`.
+        + WRROC_WORKFLOW: Workflow Run RO-Crate Workflow Run Crate (https://www.researchobject.org/workflow-run-crate/profiles/workflow_run_crate).
+        Expects a single serialized JSON-LD string item in `StructuredLog.logs` that conforms to the profile version indicated in `StructuredLog.log_type_version`.
 
-        + null: Use if your preferred logging scheme is not explicitly supported. In that case, make sure to provide sufficient documentation for client implementers to parse the log information in the web page referred to by `StructuredLog.doc_url`.
+        + null: Use if your preferred logging scheme is not explicitly supported.
+        In that case, make sure to provide sufficient documentation for client implementers to parse the log information in the web page referred to by `StructuredLog.doc_url`.
     StructuredLog:
       title: StructuredLog
       type: object
@@ -875,7 +879,7 @@ components:
         - log_type
         - log_type_version
         - logs
-      description: Log information whose shape is described by a defined model or schema.      
+      description: Log information whose shape is described by a defined model or schema.
     Log:
       title: Log
       type: object
