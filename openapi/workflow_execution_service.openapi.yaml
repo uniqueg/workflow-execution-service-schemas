@@ -832,13 +832,13 @@ components:
       description: >
         Supported models and schemes for describing the shape of structured logging information. Can take any of the following values:
 
-        + WRROC_PROCESS: Expects a single string item in `StructuredLog.logs` that represents a valid Workflow Run RO-Crate Process Run Crate (https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate) of the version indicated in `StructuredLog.log_type_version`.
+        + WRROC_PROCESS: Workflow Run RO-Crate Process Run Crate (https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate). Expects a single serialized JSON-LD string item in `StructuredLog.logs` that conforms to the profile version indicated in `StructuredLog.log_type_version`.
 
-        + WRROC_WORKFLOW: Expects a single string item in `StructuredLog.logs` that represents a valid Workflow Run RO-Crate Workflow Run Crate (https://www.researchobject.org/workflow-run-crate/profiles/workflow_run_crate) of the version indicated in `StructuredLog.log_type_version`.
+        + WRROC_WORKFLOW: Workflow Run RO-Crate Workflow Run Crate (https://www.researchobject.org/workflow-run-crate/profiles/workflow_run_crate).  Expects a single serialized JSON-LD string item in `StructuredLog.logs` that conforms to the profile version indicated in `StructuredLog.log_type_version`.
 
-        + WRROC_PROV: Expects a single string item in `StructuredLog.logs` that represents a valid Workflow Run RO-Crate Provenance Run Crate (https://www.researchobject.org/workflow-run-crate/profiles/provenance_run_crate) of the version indicated in `StructuredLog.log_type_version`.
+        + WRROC_PROV: Workflow Run RO-Crate Provenance Run Crate (https://www.researchobject.org/workflow-run-crate/profiles/provenance_run_crate). Expects a single serialized JSON-LD string item in `StructuredLog.logs` that conforms to the profile version indicated in `StructuredLog.log_type_version`.
 
-        + null: Use if your preferred logging scheme is not explicitly supported. In that case, make sure to provide documentation for client implementations in `StructuredLog.doc_url`
+        + null: Use if your preferred logging scheme is not explicitly supported. In that case, make sure to provide sufficient documentation for client implementers to parse the log information in the web page referred to by `StructuredLog.doc_url`.
     StructuredLog:
       title: StructuredLog
       type: object
@@ -856,8 +856,10 @@ components:
             - type: object
           description: >-
             Structured log message content. Whether one or more log messages are used and whether
-            these represent strings or more complex objects depends on the log type (see `spec_url`
-            and/or `doc_url` for additional details).
+            these represent strings or more complex objects depends on the log type. Log messages
+            can also contain URLs that point to web sites that host the actual log contents. See
+            the `LogType` description and `spec_url` and/or `doc_url` for additional details on
+            how the contents of a given log format are mapped to this property.
         spec_url:
           type: string
           description: >-
