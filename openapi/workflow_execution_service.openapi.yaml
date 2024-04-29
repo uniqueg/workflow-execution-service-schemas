@@ -821,6 +821,59 @@ components:
         outputs:
           type: object
           description: The outputs from the workflow run.
+    LogType:
+      title: LogType
+      enum:
+        - WRROC_PROCESS
+        - WRROC_WORKFLOW
+        - WRROC_PROV
+      type: string
+      nullable: true
+      description: >
+        Supported models and schemes for describing the shape of structured logging information. Can take any of the following values:
+
+        + WRROC_PROCESS: Expects a single string item in `StructuredLog.logs` that represents a valid Workflow Run RO-Crate Process Run Crate (https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate) of the version indicated in `StructuredLog.log_type_version`.
+
+        + WRROC_WORKFLOW: Expects a single string item in `StructuredLog.logs` that represents a valid Workflow Run RO-Crate Workflow Run Crate (https://www.researchobject.org/workflow-run-crate/profiles/workflow_run_crate) of the version indicated in `StructuredLog.log_type_version`.
+
+        + WRROC_PROV: Expects a single string item in `StructuredLog.logs` that represents a valid Workflow Run RO-Crate Provenance Run Crate (https://www.researchobject.org/workflow-run-crate/profiles/provenance_run_crate) of the version indicated in `StructuredLog.log_type_version`.
+
+        + null: Use if your preferred logging scheme is not explicitly supported. In that case, make sure to provide documentation for client implementations in `StructuredLog.doc_url`
+    StructuredLog:
+      title: StructuredLog
+      type: object
+      properties:
+        log_type:
+          $ref: '#/components/schemas/LogType'
+        log_type_version:
+          type: string
+          description: Version of `log_type` model or schema.
+        logs:
+          oneOf:
+            - type: string
+            - type: array
+              items: {}
+            - type: object
+          description: >-
+            Structured log message content. Whether one or more log messages are used and whether
+            these represent strings or more complex objects depends on the log type (see `spec_url`
+            and/or `doc_url` for additional details).
+        spec_url:
+          type: string
+          description: >-
+            A URL pointing to the specification describing the `log_type` model or schema. At least
+            one of `spec_url` and `doc_url` should always be provided if `log_type` is `null`.
+        doc_url:
+          type: string
+          description: >-
+            A web page URL with human-readable documentation for client implementers on how to
+            interpret `logs`. At least one of `spec_url` and `doc_url` should always be provided if
+            `log_type` is `null`.
+      required:
+        - log_type
+        - log_type_version
+        - logs
+      description: Log information whose shape is described by a defined model or schema.      
     Log:
       title: Log
       type: object
@@ -849,6 +902,11 @@ components:
           type: integer
           description: Exit code of the program
           format: int32
+        structured_logs:
+          type: array
+          items:
+            $ref: '#/components/schemas/StructuredLog'
+          description: Structured log information whose shape is described by one or more defined models or schemas.
         system_logs:
           type: array
           items:
